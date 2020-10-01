@@ -22,6 +22,11 @@ int main(int argc, char ** argv)
     std::string line;
     while (std::getline(infile, line)) {
         std::istringstream iss(line);
+        // convert line to lowercase
+        std::transform(line.begin(), line.end(), line.begin(),
+          [](unsigned char c){
+            return std::tolower(c);
+        });
         // std::cout << line;
         dictionary.push_back(line);
     }
@@ -41,9 +46,9 @@ int main(int argc, char ** argv)
               << durationMS % 1000 << " milliseconds\n";
 
 
-    for (int y = 0; y < crossword.size(); y++) {
-        for (int x = 0; x < crossword[0].size(); x++) {
-            std::cout << crossword[x][y];
+    for (int x = 0; x < crossword.size(); x++) {
+        for (int y = 0; y < crossword[0].size(); y++) {
+            std::cout << crossword[x][y] << ' ';
         }
         std::cout << std::endl;
     }
