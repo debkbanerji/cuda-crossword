@@ -80,13 +80,31 @@ std::vector<std::vector<char> > generateCrossword(std::vector<std::string> dicti
         std::copy(joinedPerThreadCandidates.begin(), joinedPerThreadCandidates.end(),
           std::ostream_iterator<std::string>(allConcatenatedCandidates, ""));
 
+        std::string allConcatenatedCandidatesStr = allConcatenatedCandidates.str();
+        char allConcatenatedCandidatesArray[allConcatenatedCandidatesStr.length()];
+        strcpy(allConcatenatedCandidatesArray, allConcatenatedCandidatesStr.c_str());
+
+        int threadCandidatesIndicesArray[threadCandidatesIndices.size()];
+        std::copy(threadCandidatesIndices.begin(), threadCandidatesIndices.end(), threadCandidatesIndicesArray);
+
         // std::cout << allConcatenatedCandidates.str();
 
-        char * device_crossword; // the copy of the crossword that lives in GPU RAM
+        char * deviceCrossword;
+        char * deviceAllConcatenatedCandidatesArray;
+        int * deviceThreadCandidatesIndicesArray;
 
-        cudaMalloc(&device_crossword, (width * height) * sizeof(char));
+        cudaMalloc(&deviceCrossword, (width * height) * sizeof(char));
+        cudaMalloc(&deviceAllConcatenatedCandidatesArray, allConcatenatedCandidatesStr.length() * sizeof(char));
+        cudaMalloc(&deviceThreadCandidatesIndicesArray, threadCandidatesIndices.size() * sizeof(int));
 
-        cudaFree(device_crossword);
+        // TODO: kernel work
+        // TODO: Allocate array for results
+
+        cudaFree(deviceCrossword);
+        cudaFree(deviceAllConcatenatedCandidatesArray);
+        cudaFree(deviceThreadCandidatesIndicesArray);
+
+        // TODO: Update result based on GPU work
     }
 
 
