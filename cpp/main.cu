@@ -10,7 +10,7 @@
 
 int main(int argc, char ** argv)
 {
-    std::cout << "Running Test" << std::endl;
+    std::cout << "\nRunning Test" << std::endl;
     std::cout << "Reading in dictionary" << std::endl;
 
 
@@ -18,7 +18,8 @@ int main(int argc, char ** argv)
     // Assume every line is a word that could be in the crossword
     // TODO: add support for clues in dictionary file
     std::vector<std::string> dictionary;
-    std::ifstream infile("test-dictionaries/pokedex-gen6.txt");
+    // std::ifstream infile("test-dictionaries/pokedex-gen6.txt");
+    std::ifstream infile("test-dictionaries/words.txt");
     std::string line;
     while (std::getline(infile, line)) {
         std::istringstream iss(line);
@@ -30,6 +31,9 @@ int main(int argc, char ** argv)
         // std::cout << line;
         dictionary.push_back(line);
     }
+
+    std::cout << "Shuffling dictionary" << std::endl;
+    std::shuffle(dictionary.begin(), dictionary.end(), std::random_device());
 
     std::cout << "Generating crossword" << std::endl;
 
